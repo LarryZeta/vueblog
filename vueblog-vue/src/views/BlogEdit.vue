@@ -1,25 +1,25 @@
 <template>
-  <div>
+  <div  class="mcontaner">
     <Header></Header>
 
     <div class="m-content">
 
-      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="标题" prop="title">
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
+        <el-form-item label="标题" prop="title" class="items">
           <el-input v-model="ruleForm.title"></el-input>
         </el-form-item>
 
-        <el-form-item label="摘要" prop="description">
+        <el-form-item label="摘要" prop="description" class="items">
           <el-input type="textarea" v-model="ruleForm.description"></el-input>
         </el-form-item>
 
-        <el-form-item label="内容" prop="content">
+        <el-form-item label="内容" prop="content" class="items">
           <mavon-editor v-model="ruleForm.content"></mavon-editor>
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm')">发表文章</el-button>
+          <el-button @click="resetForm('ruleForm')">重新编辑</el-button>
         </el-form-item>
       </el-form>
 
@@ -106,8 +106,23 @@
   }
 </script>
 
-<style scoped>
+<style>
+
+.mcontaner{
+  margin-top: -22px;
+  padding-top: 30px;
+  padding-bottom: 15px;
+  background-image: url('../assets/backgImg.jpg');
+}
+.demo-ruleForm{
+  max-width: 750px;
+  margin-left: 18%;
+}
   .m-content {
+    margin-top: 30px;
     text-align: center;
   }
+  .items .el-form-item__label{
+    color: white;
+}
 </style>

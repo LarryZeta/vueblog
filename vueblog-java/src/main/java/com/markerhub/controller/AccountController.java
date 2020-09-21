@@ -1,5 +1,6 @@
 package com.markerhub.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
 
 @RestController
 public class AccountController {
@@ -33,7 +35,36 @@ public class AccountController {
     public Result login(@Validated @RequestBody LoginDto loginDto, HttpServletResponse response) {
 
         User user = userService.getOne(new QueryWrapper<User>().eq("username", loginDto.getUsername()));
-        Assert.notNull(user, "用户不存在");
+//        Assert.notNull(user, "用户不存在");
+
+//        测试账户注册
+        if(null == user) {
+            try {
+                User regUser = new User();
+
+                regUser.setUsername(loginDto.getUsername());
+                regUser.setPassword(SecureUtil.md5(loginDto.getPassword()));
+                regUser.setCreated(LocalDateTime.now());
+                regUser.setAvatar("https://image-1300566513.cos.ap-guangzhou.myqcloud.com/upload/images/5a9f48118166308daba8b6da7e466aab.jpg");
+                regUser.setStatus(0);
+                regUser.setLastLogin(LocalDateTime.now());
+//                BeanUtil.copyProperties(user, regUser, "id", "userId", "created", "status");
+
+                userService.saveOrUpdate(regUser);
+                return Result.succ(MapUtil.builder()
+                        .put("username", regUser.getUsername())
+                        .put("msg", "注册成功")
+                        .put("newUser", 1)
+                        .map()
+                );
+            } catch (Exception e) {
+                return Result.fail(e.toString());
+            }
+
+        }
+
+
+//        测试时结束
 
         if(!user.getPassword().equals(SecureUtil.md5(loginDto.getPassword()))){
             return Result.fail("密码不正确");

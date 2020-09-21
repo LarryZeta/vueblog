@@ -1,10 +1,10 @@
 # DataSource Config
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/vueblog?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/vueblog?characterEncoding=utf8&useSSL=false
     username: root
-    password: admin
+    password: 123456
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**Mapper.xml
 server:
@@ -15,8 +15,8 @@ shiro-redis:
     host: 127.0.0.1:6379
 markerhub:
   jwt:
-    # ¼ÓÃÜÃØÔ¿
+    # åŠ å¯†ç§˜é’¥
     secret: f4e2e52034348f86b67cde581c0f9eb5
-    # tokenÓĞĞ§Ê±³¤£¬7Ìì£¬µ¥Î»Ãë
+    # tokenæœ‰æ•ˆæ—¶é•¿ï¼Œ7å¤©ï¼Œå•ä½ç§’
     expire: 604800
     header: Authorization

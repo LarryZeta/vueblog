@@ -1,19 +1,14 @@
 <template>
-  <div>
+  <div class="mcontaner">
     <Header></Header>
-
     <div class="mblog">
-      <h2> {{ blog.title }}</h2>
-      <el-link icon="el-icon-edit" v-if="ownBlog">
-        <router-link :to="{name: 'BlogEdit', params: {blogId: blog.id}}" >
-        编辑
+     <h2 style="display:inline-block;margin-right:20px"> {{ blog.title }}</h2>
+     <router-link :to="{name: 'BlogEdit', params: {blogId: blog.id}}" >
+         <el-button type="primary" icon="el-icon-edit">编辑</el-button>
         </router-link>
-      </el-link>
       <el-divider></el-divider>
       <div class="markdown-body" v-html="blog.content"></div>
-
     </div>
-
   </div>
 </template>
 
@@ -56,6 +51,13 @@
 </script>
 
 <style scoped>
+
+.mcontaner{
+  margin-top: -22px;
+  padding-top: 30px;
+  padding-bottom: 15px;
+  background-image: url('../assets/backgImg.jpg');
+}
   .mblog {
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     width: 100%;

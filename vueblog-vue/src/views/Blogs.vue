@@ -1,24 +1,22 @@
 <template>
   <div class="mcontaner">
     <Header></Header>
-
-    <div class="block">
+    <div class="article">
       <el-timeline>
-
-        <el-timeline-item :timestamp="blog.created" placement="top" v-for="blog in blogs">
+        <el-timeline-item :timestamp="blog.created" placement="top" v-for="blog in blogs" >
           <el-card>
-            <h4>
-              <router-link :to="{name: 'BlogDetail', params: {blogId: blog.id}}">
+            <h2>
+              <router-link :to="{name: 'BlogDetail', params: {blogId: blog.id}}" >
                 {{blog.title}}
               </router-link>
-            </h4>
+            </h2>
             <p>{{blog.description}}</p>
           </el-card>
         </el-timeline-item>
-
       </el-timeline>
 
       <el-pagination class="mpage"
+      v-show="total>5"
                      background
                      layout="prev, pager, next"
                      :current-page="currentPage"
@@ -67,9 +65,19 @@
 
 <style scoped>
 
+.mcontaner{
+ 
+  margin-top: -22px;
+  padding-top: 30px;
+  background-image: url('../assets/backgImg.jpg');
+}
+
   .mpage {
     margin: 0 auto;
     text-align: center;
+  }
+  .article{
+    max-width: 960px;
   }
 
 </style>
