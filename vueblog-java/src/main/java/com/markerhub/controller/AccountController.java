@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
 
 @RestController
 public class AccountController {
@@ -33,7 +34,29 @@ public class AccountController {
     public Result login(@Validated @RequestBody LoginDto loginDto, HttpServletResponse response) {
 
         User user = userService.getOne(new QueryWrapper<User>().eq("username", loginDto.getUsername()));
-        Assert.notNull(user, "用户不存在");
+//        Assert.notNull(user, "用户不存在");
+
+        if (null == user) {
+            try {
+                User regUser = new User();
+                regUser.setUsername(loginDto.getUsername());
+                regUser.setPassword(SecureUtil.md5(loginDto.getPassword()));
+                regUser.setAvatar("https://i.loli.net/2020/09/21/xvaT9QmSnRDZH63.png");
+                regUser.setStatus(0);
+                regUser.setCreated(LocalDateTime.now());
+                userService.saveOrUpdate(regUser);
+                return Result.succ(
+                        // newUser 是否新用户 1. 是 0. 否
+                        MapUtil.builder()
+                                .put("username", regUser.getUsername())
+                                .put("msg", "注册成功")
+                                .put("newUser", 1)
+                                .map()
+                );
+            } catch (Exception e) {
+                return Result.fail(e.toString());
+            }
+        }
 
         if(!user.getPassword().equals(SecureUtil.md5(loginDto.getPassword()))){
             return Result.fail("密码不正确");
