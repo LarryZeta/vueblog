@@ -38,29 +38,48 @@ public class AccountController {
 //        Assert.notNull(user, "用户不存在");
 
 //        测试账户注册
+//        if(null == user) {
+////            try {
+////                User regUser = new User();
+////
+////                regUser.setUsername(loginDto.getUsername());
+////                regUser.setPassword(SecureUtil.md5(loginDto.getPassword()));
+////                regUser.setCreated(LocalDateTime.now());
+////                regUser.setAvatar("https://image-1300566513.cos.ap-guangzhou.myqcloud.com/upload/images/5a9f48118166308daba8b6da7e466aab.jpg");
+////                regUser.setStatus(0);
+////                regUser.setLastLogin(LocalDateTime.now());
+//////                BeanUtil.copyProperties(user, regUser, "id", "userId", "created", "status");
+////
+////                userService.saveOrUpdate(regUser);
+////                return Result.succ(MapUtil.builder()
+////                        .put("username", regUser.getUsername())
+////                        .put("msg", "注册成功")
+////                        .put("newUser", 1)
+////                        .map()
+////                );
+////            } catch (Exception e) {
+////                return Result.fail(e.toString());
+////            }
+////
+////        }
         if(null == user) {
-            try {
-                User regUser = new User();
+            User temp = new User();
 
-                regUser.setUsername(loginDto.getUsername());
-                regUser.setPassword(SecureUtil.md5(loginDto.getPassword()));
-                regUser.setCreated(LocalDateTime.now());
-                regUser.setAvatar("https://image-1300566513.cos.ap-guangzhou.myqcloud.com/upload/images/5a9f48118166308daba8b6da7e466aab.jpg");
-                regUser.setStatus(0);
-                regUser.setLastLogin(LocalDateTime.now());
-//                BeanUtil.copyProperties(user, regUser, "id", "userId", "created", "status");
+            temp.setUsername(loginDto.getUsername());
+            temp.setPassword(SecureUtil.md5(loginDto.getPassword()));
+//            temp.setEmail("123");
+            temp.setCreated(LocalDateTime.now());
+            temp.setAvatar("https://image-1300566513.cos.ap-guangzhou.myqcloud.com/upload/images/5a9f48118166308daba8b6da7e466aab.jpg");
+            temp.setStatus(0);
+            temp.setLastLogin(LocalDateTime.now());
+            temp.setEmail("a");
+            BeanUtil.copyProperties(user, temp, "id", "userId", "created", "status");
+            userService.saveOrUpdate(temp);
 
-                userService.saveOrUpdate(regUser);
-                return Result.succ(MapUtil.builder()
-                        .put("username", regUser.getUsername())
-                        .put("msg", "注册成功")
-                        .put("newUser", 1)
-                        .map()
-                );
-            } catch (Exception e) {
-                return Result.fail(e.toString());
-            }
-
+            return Result.succ(MapUtil.builder()
+                    .put("newUser","1")
+                    .map()
+            );
         }
 
 
@@ -79,6 +98,7 @@ public class AccountController {
                 .put("username", user.getUsername())
                 .put("avatar", user.getAvatar())
                 .put("email", user.getEmail())
+                .put("newUser","0")
                 .map()
         );
     }

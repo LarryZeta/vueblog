@@ -58,26 +58,24 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          const _this = this;
           this.$axios.post("/login", this.ruleForm).then((res) => {
-              if (res.data.newUser && res.data.newUser === 1) {
-              console.log('用户创建成功，请重新登录')
-              Element.Message.error("用户创建成功，请重新登录");
-              this.history(0);
-            }else if(!res.data.newUser){
-               console.log(res.data);
+            const _this = this;
             const jwt = res.headers["authorization"];
             const userInfo = res.data.data;
-
             // 把数据共享出去
             _this.$store.commit("SET_TOKEN", jwt);
             _this.$store.commit("SET_USERINFO", userInfo);
-
-            // 获取
-            console.log(_this.$store.getters.getUser);
-
-            _this.$router.push("/blogs");
+            if (userInfo.newUser == "0") {
+              _this.$router.push("/blogs");
+            } else {
+              Element.Message.success("用户创建成功，请重新登录");
+              // _this.history(0)
             }
+            // 获取
+            console.log(
+              "_this.$store.getters.getUser",
+              _this.$store.getters.getUser
+            );
           });
         } else {
           console.log("error submit!!");

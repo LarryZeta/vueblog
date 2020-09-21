@@ -27,7 +27,7 @@
       return {
         user: {
           username: '请先登录',
-          avatar: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600676761769&di=ef47e738bc64aa85875cabe7b45fc598&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fw%3D580%2Fsign%3De2c1a7bbb5fd5266a72b3c1c9b189799%2Fe7f83cce36d3d539d50aa4933987e950352ab0b9.jpg'
+          avatar: 'https://i.loli.net/2020/09/21/4or5tFQhc71KkUB.png'
         },
         hasLogin: false
       }
@@ -50,7 +50,6 @@
       if(this.$store.getters.getUser.username) {
         this.user.username = this.$store.getters.getUser.username
         this.user.avatar = this.$store.getters.getUser.avatar
-
         this.hasLogin = true
       }
 
